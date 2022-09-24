@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Cliente</h1>
+
+<div mat-dialog-content>
+  <p>Digite as informações abaixo</p>
+  <mat-form-field aspect = "legado">
+    <mat-label>Nome</mat-label>
+    <input placeholder="Insira o nome" matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <mat-form-field aspect = "legado">
+    <mat-label>Cpf</mat-label>
+    <input placeholder="Insira o CPF" matInput [(ngModel)]="data.cpf">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-content>
+  <mat-form-field aspect = "legado">
+    <mat-label>Idade</mat-label>
+    <input placeholder="Insira a idade" matInput [(ngModel)]="data.age">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

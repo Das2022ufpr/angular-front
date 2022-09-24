@@ -1,0 +1,9 @@
+<div *ngIf="clients.length > 0; else list">
+    <div>
+        <app-list-client [clientsChild] = "clients"></app-list-client>
+    </div>
+</div>
+
+<ng-template #list>
+    <app-empty-list></app-empty-list>
+</ng-template>  
