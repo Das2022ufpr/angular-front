@@ -57,6 +57,7 @@ import { RemoveComponent } from './components/client/remove/remove.component';
 import { AddComponent } from './components/client/add/add.component';
 import { EmptyListComponent } from './components/shared/empty-list/empty-list.component';
 import { CustomDialogComponent } from './components/shared/custom-dialog/custom-dialog.component';
+import { TitleComponent } from './components/shared/title/title.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +73,7 @@ import { CustomDialogComponent } from './components/shared/custom-dialog/custom-
     AddComponent,
     EmptyListComponent,
     CustomDialogComponent,
+    TitleComponent,
   ],
   imports: [
     BrowserModule,

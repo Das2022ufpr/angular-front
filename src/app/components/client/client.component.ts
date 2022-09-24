@@ -9,6 +9,7 @@ import { ClientService } from './service/client.service';
 })
 export class ClientComponent implements OnInit {
   clients: Client[] = [];
+  title = "Clientes";
 
   constructor(private clientService: ClientService) {}
 
