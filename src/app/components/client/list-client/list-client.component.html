@@ -22,7 +22,7 @@
   <ng-container matColumnDef="demo-edit-button">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let client">
-        <app-edit></app-edit>
+        <app-edit [client] = "client"></app-edit>
     </td>
   </ng-container>
 
