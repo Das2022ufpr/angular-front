@@ -1,9 +1,7 @@
 <app-title [title] = "title"></app-title>
 
 <div *ngIf="clients.length > 0; else list">
-    <div>
-        <app-list-client [clientsChild] = "clients"></app-list-client>
-    </div>
+    <app-list-client></app-list-client>
 </div>
 
 <ng-template #list>

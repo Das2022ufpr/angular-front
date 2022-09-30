@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomDialogComponent } from '../../shared/custom-dialog/custom-dialog.component';
 import { Client } from '../model/client';
+import { ClientService } from '../service/client.service';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -10,7 +11,8 @@ import { Client } from '../model/client';
 export class EditComponent implements OnInit {
   @Input() client?: Client;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, 
+    public clientService: ClientService) { }
 
   ngOnInit(): void {}
 
@@ -26,7 +28,10 @@ export class EditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+      let client = new Client(this.client?.id!, 
+        result.cpf, result.name, result.age);
+        
+      this.clientService.editClient(client);
     });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ClientRepository } from "../repository/client.repository";
 
 import { Client } from "../model/client";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class ClientService {
@@ -9,23 +10,19 @@ export class ClientService {
 
   constructor(private clientRepository: ClientRepository) {}
 
-  fetchaAllClients(): Client[] {
-    this.clientRepository.fetchClients().subscribe((clients) => {
-      this.client = clients;
-    });
-
-    return this.client;
+  fetchaAllClients(): Observable<Client[]> {
+    return this.clientRepository.fetchClients();
   }
 
   addClient(client: Client) {
-    this.clientRepository.addClient(client);
+    this.clientRepository.addClient(client)
   }
 
-  editClient() {
-
+  editClient(client: Client) {
+    this.clientRepository.editClient(client);
   }
 
-  removerClient() {
-
+  removerClient(client: Client) {
+    this.clientRepository.removeClient(client.id);
   }
 }

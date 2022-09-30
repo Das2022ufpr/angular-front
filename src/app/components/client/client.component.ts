@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Client } from './model/client';
 import { ClientService } from './service/client.service';
 
@@ -10,19 +10,19 @@ import { ClientService } from './service/client.service';
 export class ClientComponent implements OnInit {
   clients: Client[] = [];
   title = "Clientes";
+  
 
   constructor(private clientService: ClientService) {}
 
   ngOnInit(): void {
-    this.clients = this.fetchClients();
+    this.fetchClients();
   }
 
-  private fetchClients(): Client[] {
-    return this.clientService.
-    fetchaAllClients();
-  }
-
-  private addClient() : void {
-    alert("Client ADD")
+  private fetchClients(): void {
+    this.clientService
+                .fetchaAllClients()
+                .subscribe((clients) => {
+                  this.clients = clients;      
+    });
   }
 }

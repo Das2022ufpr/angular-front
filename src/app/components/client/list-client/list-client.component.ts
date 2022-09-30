@@ -1,5 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { Client } from '../model/client';
+import { ClientService } from '../service/client.service';
 
 @Component({
   selector: 'app-list-client',
@@ -7,13 +11,21 @@ import { Client } from '../model/client';
   styleUrls: ['./list-client.component.css']
 })
 export class ListClientComponent implements OnInit {
-  @Input() clientsChild: Client[] = [];
-
+  dataSource = new MatTableDataSource<Client>([]);
   displayedColumns: string[] = ['demo-id',
    'demo-name', 'demo-age', 'demo-cpf',
     'demo-edit-button', 'demo-remove-button'];
 
-  constructor() { }
+  constructor(private clientService: ClientService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchClients();
+  }
+
+  private fetchClients(): void {
+    this.clientService
+                .fetchaAllClients().subscribe((clients) => {
+                  this.dataSource.data = clients;
+                });
+  }
 }

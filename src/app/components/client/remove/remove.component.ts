@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Client } from '../model/client';
+import { ClientService } from '../service/client.service';
 
 @Component({
   selector: 'app-remove',
@@ -6,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./remove.component.css']
 })
 export class RemoveComponent implements OnInit {
+  @Input() client?: Client;
 
-  constructor() { }
+  constructor(public clientService: ClientService) { }
 
   ngOnInit(): void {
   }
 
   onClick(): void {
-    alert('Removido!');
+    this.clientService.removerClient(this.client!);
   }
 }

@@ -31,7 +31,7 @@ export class AddComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let client = new Client(1, result.cpf, result.name, result.age);
+      let client = new Client(result.id, result.cpf, result.name, result.age);
       this.clientService.addClient(client);
     });
   }

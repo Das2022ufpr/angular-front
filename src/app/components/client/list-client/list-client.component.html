@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="clientsChild" class="mat-elevation-z8 demo-table">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container matColumnDef="demo-id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let client"> {{client.id}} </td>
@@ -29,7 +29,7 @@
   <ng-container matColumnDef="demo-remove-button">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let client">
-        <app-remove></app-remove>
+        <app-remove [client] = client></app-remove>
     </td>
   </ng-container>
 
