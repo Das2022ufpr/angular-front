@@ -43,7 +43,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {DialogModule} from '@angular/cdk/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar/navbar.component';
 import { ClientComponent } from './components/client/client.component';
@@ -58,6 +58,8 @@ import { AddComponent } from './components/client/add/add.component';
 import { EmptyListComponent } from './components/shared/empty-list/empty-list.component';
 import { CustomDialogComponent } from './components/shared/custom-dialog/custom-dialog.component';
 import { TitleComponent } from './components/shared/title/title.component';
+import { NgxMaskModule } from 'ngx-mask';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,6 +121,10 @@ import { TitleComponent } from './components/shared/title/title.component';
     DialogModule,
     FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot({
+      dropSpecialCharacters: false
+    }),
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -13,7 +13,7 @@ import { ClientService } from '../service/client.service';
 export class ListClientComponent implements OnInit {
   dataSource = new MatTableDataSource<Client>([]);
   displayedColumns: string[] = ['demo-id',
-   'demo-name', 'demo-age', 'demo-cpf',
+   'demo-name', 'demo-lastName', 'demo-cpf',
     'demo-edit-button', 'demo-remove-button'];
 
   constructor(private clientService: ClientService) { }
@@ -24,7 +24,7 @@ export class ListClientComponent implements OnInit {
 
   private fetchClients(): void {
     this.clientService
-                .fetchaAllClients().subscribe((clients) => {
+                .fetchaAllClients().subscribe((clients) => { 
                   this.dataSource.data = clients;
                 });
   }

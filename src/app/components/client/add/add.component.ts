@@ -13,7 +13,7 @@ import { ClientService } from '../service/client.service';
 export class AddComponent implements OnInit {
   name: string = "";
   cpf: string = "";
-  age: string = "";
+  lastName: string = "";
 
   constructor(public dialog: MatDialog, public clientService: ClientService) {}
 
@@ -26,13 +26,16 @@ export class AddComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CustomDialogComponent, {
-      width: '550px',
-      data: {name: this.name, cpf: this.cpf, age: this.age},
+      width: '850px',
+      data: {name: this.name, cpf: this.cpf, lastName: this.lastName},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let client = new Client(result.id, result.cpf, result.name, result.age);
-      this.clientService.addClient(client);
+      let client = new Client(result.id, result.cpf, result.name, result.lastName);
+      
+      if (client) {
+        this.clientService.addClient(client);
+      }
     });
   }
 }

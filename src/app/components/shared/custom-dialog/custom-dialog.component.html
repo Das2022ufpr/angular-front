@@ -1,28 +1,67 @@
-<h1 mat-dialog-title>Cliente</h1>
+<div layout="column" layout-fill>
+  <div align="center" layout="row" layout-align="center center">
+    <mat-card class="info-card mat-elevation-z8" flex="80">
 
-<div mat-dialog-content>
-  <p>Digite as informações abaixo</p>
-  <mat-form-field aspect = "legado">
-    <mat-label>Nome</mat-label>
-    <input placeholder="Insira o nome" matInput [(ngModel)]="data.name">
-  </mat-form-field>
-</div>
+      <mat-card-title>Cliente</mat-card-title>
+      <mat-card-subtitle>Digite as informações de cadastro do cliente</mat-card-subtitle>
 
-<div mat-dialog-content>
-  <mat-form-field aspect = "legado">
-    <mat-label>Cpf</mat-label>
-    <input placeholder="Insira o CPF" matInput [(ngModel)]="data.cpf">
-  </mat-form-field>
-</div>
+      <mat-card-content fxLayout="column" fxLayoutAlign="stretch" >
+        <form [formGroup]="clientForm" fxLayout="column" fxLayoutAlign="start stretch" >
+          
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start">
+            <mat-form-field fxFlex="45" style="margin-right: 10px">  
+              <input matInput type="text"[(ngModel)]="data.name" formControlName="name" placeholder="Digite o nome" maxlength="15">
+              <mat-error *ngIf="clientForm.controls.name.hasError('required')">
+                Campo obrigatório
+              </mat-error>
+              <mat-error *ngIf="clientForm.controls.name.hasError('minlength')">
+                Campo maior que 6 caracteres
+              </mat-error>
+            </mat-form-field>
 
-<div mat-dialog-content>
-  <mat-form-field aspect = "legado">
-    <mat-label>Idade</mat-label>
-    <input placeholder="Insira a idade" matInput [(ngModel)]="data.age">
-  </mat-form-field>
-</div>
+            <mat-form-field fxFlex="45" style="margin-left: 10px">  
+              <input matInput type="text" [(ngModel)]="data.lastName" formControlName="lastName" placeholder="Digite o sobrenome" maxlength="15">
+              <mat-error *ngIf="clientForm.controls.lastName.hasError('required')">
+                Campo obrigatório
+              </mat-error>
+              <mat-error *ngIf="clientForm.controls.lastName.hasError('minlength')">
+                Campo maior que 6 caracteres
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+          <div fxFlex="100"  fxLayout="row" fxLayoutAlign="space-between start">
+            <mat-form-field fxFlex="50">
+              <input matInput [(ngModel)]="data.cpf" formControlName="cpf"
+              placeholder="Digite o cpf" mask="000.000.000-00">
+              <mat-error *ngIf="clientForm.controls.cpf.hasError('required')">
+                Campo obrigatório
+              </mat-error>    
+
+              <mat-error *ngIf="clientForm.controls.cpf.hasError('minlength')">
+                Tamanho minimo não atingido
+              </mat-error>
+
+              <mat-error *ngIf="clientForm.controls.cpf.hasError('cpfinvalido')">
+               CARAMBA
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <button mat-button (click)="onNoClick()" color="primary">
+            <mat-icon>cancel</mat-icon>Cancelar
+          </button>
+
+          <button [mat-dialog-close]="data" mat-button color="primary" 
+            type="submit" [disabled]="!clientForm.valid">
+            <mat-icon>done</mat-icon>Enviar
+          </button>
+        </form>
+
+      </mat-card-content>
+      <mat-card-footer>
+      </mat-card-footer>
+    </mat-card>
+  </div>
 </div>
+  

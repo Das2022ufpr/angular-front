@@ -24,14 +24,16 @@ export class EditComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomDialogComponent, {
       width: '550px',
       data: {name: this.client?.name,
-         cpf: this.client?.cpf, age: this.client?.age},
+         cpf: this.client?.cpf, lastName: this.client?.lastName},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let client = new Client(this.client?.id!, 
-        result.cpf, result.name, result.age);
-        
-      this.clientService.editClient(client);
+      let client = new Client(this.client?.id!,
+        result.cpf, result.name, result.lastName);
+
+      if (client) {
+        this.clientService.editClient(client);
+      }
     });
   }
 }

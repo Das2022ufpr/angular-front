@@ -2,16 +2,16 @@ export class Client {
   id: number;
   cpf: string;
   name: string;
-  age: number;
+  lastName: string;
 
   constructor(
     private idParam: number,
     private cpfParam: string,
     private nameParam: string,
-    private ageParam: number,) {
+    private lastNameParam: string,) {
       this.id = idParam;
       this.cpf = cpfParam;
       this.name = nameParam;
-      this.age = ageParam;
+      this.lastName = lastNameParam;
   }
 }
