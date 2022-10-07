@@ -14,6 +14,18 @@ export class ClientService {
     return this.clientRepository.fetchClients();
   }
 
+  fetchClientByCPF(cpf: string): Client | undefined {
+    this.clientRepository.fetchClients().subscribe((listOfClients) => {
+      listOfClients.forEach((client: Client) => {
+        if (client.cpf === cpf) {
+          this.clientRepository.putClientInLocalStorage(client);
+        }
+        return undefined;
+      });
+    });
+    return undefined;
+  }
+
   addClient(client: Client) {
     this.clientRepository.addClient(client)
   }
@@ -24,5 +36,13 @@ export class ClientService {
 
   removerClient(client: Client) {
     this.clientRepository.removeClient(client.id);
+  }
+
+  isCPFExists(cpf: string): boolean {
+    return this.clientRepository.isExistsCPF(cpf);
+  }
+
+  isLoggedin(): Observable<boolean> {
+    return this.clientRepository.isLoggedin();
   }
 }

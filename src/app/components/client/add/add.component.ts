@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomDialogComponent } from '../../shared/custom-dialog/custom-dialog.component';
 import { Client } from '../model/client';

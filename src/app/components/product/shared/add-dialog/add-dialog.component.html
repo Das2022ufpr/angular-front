@@ -1,0 +1,36 @@
+<div layout="column" layout-fill>
+    <div align="center" layout="row" layout-align="center center">
+      <mat-card class="info-card mat-elevation-z8" flex="80">
+  
+        <mat-card-title>Produto</mat-card-title>
+        <mat-card-subtitle>Digite a quantidade</mat-card-subtitle>
+  
+        <mat-card-content fxLayout="column" fxLayoutAlign="stretch" >
+          <form [formGroup]="productForm" fxLayout="column" fxLayoutAlign="start stretch" >
+            
+            <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between start">
+              <mat-form-field fxFlex="45" style="margin-right: 10px">  
+                <input matInput type="text"[(ngModel)]="data.quantity" formControlName="quantity" placeholder="Digite a quantidade" maxlength="6">
+                <mat-error *ngIf="productForm.controls.quantity.hasError('required')">
+                  Campo obrigatório
+                </mat-error>
+              </mat-form-field>
+            </div>
+  
+            <button mat-button (click)="onNoClick()" color="primary">
+              <mat-icon>cancel</mat-icon>Cancelar
+            </button>
+  
+            <button [mat-dialog-close]="data" mat-button color="primary" 
+              type="submit" [disabled]="!productForm.valid">
+              <mat-icon>done</mat-icon>Enviar
+            </button>
+          </form>
+  
+        </mat-card-content>
+        <mat-card-footer>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+    

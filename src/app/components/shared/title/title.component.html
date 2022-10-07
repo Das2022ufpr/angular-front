@@ -3,8 +3,11 @@
         <td>
             <h2 class="title">{{ title }}</h2>
         </td>
-        <td>
+        <td *ngIf="title === 'Clientes'">
             <app-add class = "button"></app-add>
+        </td>
+        <td *ngIf="title === 'Produtos' && !isLoogedin">
+           <app-add-order class = "button"></app-add-order>
         </td>
     </tr>
 </div>

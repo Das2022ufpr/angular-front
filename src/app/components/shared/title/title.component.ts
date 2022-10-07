@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ClientService } from '../../client/service/client.service';
 
 @Component({
   selector: 'app-title',
@@ -7,10 +8,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TitleComponent implements OnInit {
   @Input() title = '';
+  isLoogedin = false;
 
-  constructor() { }
+  constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
+    this.init();
   }
 
+  init() {
+    this.clientService.isLoggedin().subscribe((isLog) => {
+      this.isLoogedin = isLog;
+    }); 
+  }
 }

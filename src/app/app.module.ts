@@ -59,6 +59,11 @@ import { EmptyListComponent } from './components/shared/empty-list/empty-list.co
 import { CustomDialogComponent } from './components/shared/custom-dialog/custom-dialog.component';
 import { TitleComponent } from './components/shared/title/title.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { ListProductComponent } from './components/product/list-product/list-product.component';
+import { AddOrderComponent } from './components/order/add-order/add-order.component';
+import { OrderDialogComponent } from './components/order/shared/order-dialog/order-dialog.component';
+import { AddProductComponent } from './components/product/add-product/add-product.component';
+import { AddDialogComponent } from './components/product/shared/add-dialog/add-dialog.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +81,11 @@ import { NgxMaskModule } from 'ngx-mask';
     EmptyListComponent,
     CustomDialogComponent,
     TitleComponent,
+    ListProductComponent,
+    AddOrderComponent,
+    OrderDialogComponent,
+    AddProductComponent,
+    AddDialogComponent,
   ],
   imports: [
     BrowserModule,

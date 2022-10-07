@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Observer, of } from "rxjs";
+import { BehaviorSubject, Observable} from "rxjs";
 import { StringsConstants } from "src/app/shared/strings";
 import { Client } from "../model/client";
 import { IClientRepository } from "./interface/iclient.repository";
@@ -9,19 +9,22 @@ export class ClientRepository implements IClientRepository {
   endpointUri = `${StringsConstants.baseUrl}/client`;
   clientList = this.listOfClient();
   behaviorClientList = new BehaviorSubject<Client[]>((this.listOfClient()));
+  
+  numberOfIndex = 0;
 
-  constructor() {
-  }
+  constructor() {}
 
   fetchClients(): Observable<Client[]> {
     return this.behaviorClientList;
   }
 
   addClient(client: Client) {
-    client.id = this.clientList.length;
+    client.id = this.numberOfIndex++;
 
-    this.clientList.push(client);
-    this.behaviorClientList.next(this.clientList);
+    if (!this.isExistsCPF(client.cpf)) {
+      this.clientList.push(client);
+      this.behaviorClientList.next(this.clientList);
+    }
   }
 
   editClient(clientParam: Client) {
@@ -48,47 +51,28 @@ export class ClientRepository implements IClientRepository {
     });
   }
 
-  private listOfClient(): Client[] {
-    return [
-
-    ]
+  isExistsCPF(cpf: string): boolean {
+    return this.clientList.find((client) => client.cpf === cpf) !== undefined;
   }
 
-  private returnClientInsideArray(id : number): Client | undefined {
-    var client : Client;
+  isLoggedin(): Observable<boolean> {
+    const clientName = localStorage.getItem('client_name');
+    const isLogg = clientName !== undefined && clientName !== "";
 
-    this.clientList.forEach((clients) => {
-      if (clients.id === id) {
-        client = clients;
-      }
-
-      return client;
+    return new Observable((subs) => {
+        subs.next(isLogg);
+        subs.complete();
     });
-
-    return undefined;
-  }
 }
 
-//   private listOfClient(): Client[] {
-//     return [
-//       {
-//         'id': 1,
-//         'cpf': '874.123.412-99',
-//         'name': 'Teste',
-//         'age': 44
-//       },
-//       {
-//         'id': 2,
-//         'cpf': '888.143.875-67',
-//         'name': 'Ola',
-//         'age': 41
-//       },
-//       {
-//         'id': 3,
-//         'cpf': '333.341.665-12',
-//         'name': 'Tudo bem',
-//         'age': 44
-//       }
-//     ];
-//   }
-// }
+  putClientInLocalStorage(client: Client) {
+    localStorage.setItem('client_name', client.name);
+    localStorage.setItem('client_cpf', client.cpf);
+  }
+
+  private listOfClient(): Client[] {
+    return []
+  }
+
+  
+}
