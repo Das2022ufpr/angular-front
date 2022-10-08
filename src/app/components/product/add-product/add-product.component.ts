@@ -1,6 +1,10 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Product } from '../model/product';
+import { ProductRepository } from '../repository/product.repository';
+import { ProductService } from '../service/product.service';
 import { AddDialogComponent } from '../shared/add-dialog/add-dialog.component';
 
 @Component({
@@ -9,10 +13,14 @@ import { AddDialogComponent } from '../shared/add-dialog/add-dialog.component';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
-  quantity: number = 0;
   @Input() product?: Product;
+  
+  listOfProduct: Product[] = [];
+  quantity: number = 0;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private productService: ProductService) { }
 
   ngOnInit(): void {}
 
@@ -27,7 +35,13 @@ export class AddProductComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+      if (this.product || this.product !== '') {
+        this.addQuantityAndProduct(this.product!, result.quantity);
+      }
     });
+  }
+
+  addQuantityAndProduct(product: Product, quantity: number) {
+    this.productService.addProductAndQuantity(product, quantity);
   }
 }

@@ -23,4 +23,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<div *ngIf="isLogg" class="container">
+  <button #btn mat-raised-button
+    color="primary" (click) ="onClick()">
+    Fechar o pedido
+  </button>
+</div>
   
