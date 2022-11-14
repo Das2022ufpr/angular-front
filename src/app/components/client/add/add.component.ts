@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CustomDialogComponent } from '../../shared/custom-dialog/custom-dialog.component';
 import { Client } from '../model/client';
 import { ClientService } from '../service/client.service';
@@ -15,7 +16,11 @@ export class AddComponent implements OnInit {
   cpf: string = "";
   lastName: string = "";
 
-  constructor(public dialog: MatDialog, public clientService: ClientService) {}
+  constructor(
+    private dialog: MatDialog,
+    private clientService: ClientService,
+    private _snackBar: MatSnackBar,
+    ) {}
 
   ngOnInit(): void {
   }
@@ -34,8 +39,21 @@ export class AddComponent implements OnInit {
       let client = new Client(result.id, result.cpf, result.name, result.lastName);
       
       if (client) {
-        this.clientService.addClient(client);
+        this.clientService
+              .addClient(client)
+              .subscribe({
+                next: (_) => this.errorMessage('Cliente cadastrado com sucesso!'),
+                error: (_) => this.errorMessage('Não foi possível realizar o cadastro'),
+                complete: () => this.clientService.fetchaAllClients(),
+              });
       }
     });
+  }
+
+  errorMessage(message: string) {
+    let config = new MatSnackBarConfig();
+
+    config.duration = 5 * 1000;
+    this._snackBar.open(message, 'Fechar', config);
   }
 }

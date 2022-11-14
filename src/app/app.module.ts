@@ -64,6 +64,7 @@ import { AddOrderComponent } from './components/order/add-order/add-order.compon
 import { OrderDialogComponent } from './components/order/shared/order-dialog/order-dialog.component';
 import { AddProductComponent } from './components/product/add-product/add-product.component';
 import { AddDialogComponent } from './components/product/shared/add-dialog/add-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { AddDialogComponent } from './components/product/shared/add-dialog/add-d
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     NgxMaskModule.forRoot({
       dropSpecialCharacters: false
     }),

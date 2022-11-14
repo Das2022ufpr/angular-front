@@ -24,7 +24,7 @@ export class ListClientComponent implements OnInit {
 
   private fetchClients(): void {
     this.clientService
-                .fetchaAllClients().subscribe((clients) => { 
+                .fetchaAllClients().subscribe((clients) => {
                   this.dataSource.data = clients;
                 });
   }

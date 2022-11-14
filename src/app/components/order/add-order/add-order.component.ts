@@ -32,12 +32,12 @@ export class AddOrderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (this.clientService.isCPFExists(result.cpf)) {
-        this.clientService.fetchClientByCPF(result.cpf);
-        this.showSucessSnackBar();
-      } else {
-        this.showErrorSnackBar();
-      }
+      // if (this.clientService.isCPFExists(result.cpf)) {
+      //   this.clientService.fetchClientByCPF(result.cpf);
+      //   this.showSucessSnackBar();
+      // } else {
+      //   this.showErrorSnackBar();
+      // }
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ClientRepository } from "../repository/client.repository";
 
 import { Client } from "../model/client";
-import { Observable } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class ClientService {
@@ -26,20 +26,17 @@ export class ClientService {
     return undefined;
   }
 
-  addClient(client: Client) {
-    this.clientRepository.addClient(client)
+  addClient(client: Client): Observable<Client> {
+    return this.clientRepository
+        .addClient(client)
   }
 
-  editClient(client: Client) {
-    this.clientRepository.editClient(client);
+  editClient(client: Client): Observable<Client> {
+    return this.clientRepository.editClient(client);
   }
 
-  removerClient(client: Client) {
-    this.clientRepository.removeClient(client.id);
-  }
-
-  isCPFExists(cpf: string): boolean {
-    return this.clientRepository.isExistsCPF(cpf);
+  removerClient(client: Client): Observable<any> {
+    return this.clientRepository.removeClient(client.id);
   }
 
   isLoggedin(): Observable<boolean> {
