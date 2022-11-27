@@ -1,2 +1,5 @@
 <app-title [title] = "title"></app-title>
+<div *ngIf="loggedin">
+    <p>Usuário logado: {{user}}</p>
+</div>
 <app-list-product></app-list-product>

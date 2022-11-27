@@ -14,7 +14,6 @@ import { ProductService } from '../service/product.service';
 
 export class ListProductComponent implements OnInit {
   nameClient: string = ""
-  isLogg = false;
   dataSource = new MatTableDataSource<Product>([]);
   displayedColumns: string[] = ['demo-id','demo-description'];
 
@@ -25,29 +24,28 @@ export class ListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchAllProducts();
-    this.isLoggedin();
-    this.fetchClient();
-    this.isLogg ? this.displayedColumns.push('demo-add') : '';
+    this.isClientValid();
   }
 
   fetchAllProducts(): void {
-    this.productService.allProducts().subscribe((products) => {
-      this.dataSource.data = products;
+    this.productService.allProducts().subscribe({
+      next: (products) => this.allProducts(products),
     });
   }
 
-  fetchClient(): void {
-    const cpf = localStorage.getItem('client_cpf') ?? '';
-    this.nameClient = this.clientService.fetchClientByCPF(cpf)?.name ?? '';
-  }
-
-  isLoggedin(): void {
-    this.clientService.isLoggedin().subscribe((isLog) => {
-      this.isLogg = isLog;
-    });
+  allProducts(products: Product[]): void {
+    this.dataSource.data = products;
   }
 
   onClick() {
     this.route.navigate(['/order']);
+  }
+
+  isClientValid() {
+    this.clientService.isClientLogged().subscribe((newValue) => {
+      if (newValue) {
+        this.displayedColumns.push('demo-add');
+      }
+    });
   }
 }

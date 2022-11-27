@@ -1,4 +1,6 @@
-<button #btn mat-raised-button
-    color="primary" (click) ="onClick()">
-    Criar Pedido
-</button>
+<div *ngIf="!cpfExists">
+    <button #btn mat-raised-button
+        color="primary" (click) ="onClick()">
+        Criar Pedido
+    </button>
+</div>

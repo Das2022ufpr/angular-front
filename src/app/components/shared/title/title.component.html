@@ -9,5 +9,13 @@
         <td *ngIf="title === 'Produtos' && !isLoogedin">
            <app-add-order class = "button"></app-add-order>
         </td>
+
+        <td *ngIf="title === 'Produtos' && isLoogedin">
+            <app-logout class = "button"></app-logout>
+        </td>
+
+        <td *ngIf="title === 'Pedidos'">
+            
+         </td>
     </tr>
 </div>

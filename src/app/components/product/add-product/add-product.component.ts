@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ClientService } from '../../client/service/client.service';
+import { ItenOrder } from '../../item-order/model/item-order';
 import { Product } from '../model/product';
 import { ProductRepository } from '../repository/product.repository';
 import { ProductService } from '../service/product.service';
@@ -17,12 +20,20 @@ export class AddProductComponent implements OnInit {
   
   listOfProduct: Product[] = [];
   quantity: number = 0;
+  isLogged: boolean = false;
 
   constructor(
     private dialog: MatDialog,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private clientService: ClientService,
+    private _snackBar: MatSnackBar,
+    ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.clientService.isClientLogged().subscribe({
+      next: (newValue) => this.isLogged = newValue,
+    });
+  }
 
   onClick() {
     this.openDialog();
@@ -42,6 +53,16 @@ export class AddProductComponent implements OnInit {
   }
 
   addQuantityAndProduct(product: Product, quantity: number) {
-    this.productService.addProductAndQuantity(product, quantity);
+    let item = new ItenOrder(product.description, quantity);
+
+    this.productService.addProductAndQuantity(item);
+    this.customMessage('Produto adicionado a cesta de compras!');
+  }
+
+  customMessage(message: string) {
+    let config = new MatSnackBarConfig();
+
+    config.duration = 5 * 1000;
+    this._snackBar.open(message, 'Fechar', config);
   }
 }

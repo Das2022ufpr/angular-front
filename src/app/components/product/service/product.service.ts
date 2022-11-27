@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { ItenOrder } from "../../item-order/model/item-order";
 
 import { Product } from "../model/product";
 import { ProductRepository } from "../repository/product.repository";
@@ -12,25 +13,15 @@ export class ProductService {
         return this.productRepository.allProducts();
     }
 
-    getProductById(id: number): Product | undefined {
-        this.productRepository.allProducts().subscribe((subs) => {
-            subs.map((product) => {
-                if (product.id === id) {
-                    return product;
-                }
-
-                return undefined;
-            });
-        });
-
-        return undefined;
+    addProductAndQuantity(item: ItenOrder): void {
+        this.productRepository.addProductsAndQuantity(item);
     }
 
-    addProductAndQuantity(product: Product, quantity: number): void {
-        this.productRepository.addProductsAndQuantity(product, quantity);
-    }
-
-    allProductsAndQuantity(): Observable<Map<String, number>> {
+    allProductsAndQuantity(): Observable<ItenOrder[]> {
         return this.productRepository.allProductsAndQuantity();
+    }
+
+    clearShoppingCard(): void {
+        this.productRepository.clearShoppingCard();
     }
 }

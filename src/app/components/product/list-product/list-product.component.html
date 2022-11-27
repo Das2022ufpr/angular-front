@@ -1,7 +1,3 @@
-<div *ngIf="isLogg">
-  <p>Usuário logado: {{nameClient}}</p>
-</div>
-
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <ng-container matColumnDef="demo-id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -14,7 +10,7 @@
     </ng-container>
 
     <ng-container matColumnDef="demo-add">
-      <th mat-header-cell *matHeaderCellDef>Adicionar produtos</th>
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let product">
         <app-add-product [product] = product></app-add-product>
       </td>
@@ -23,11 +19,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-<div *ngIf="isLogg" class="container">
-  <button #btn mat-raised-button
-    color="primary" (click) ="onClick()">
-    Fechar o pedido
-  </button>
-</div>
   

@@ -2,11 +2,12 @@ import { Injectable } from "@angular/core";
 import { ClientRepository } from "../repository/client.repository";
 
 import { Client } from "../model/client";
-import { catchError, Observable, throwError } from "rxjs";
+import { BehaviorSubject, catchError, Observable, observeOn, of, throwError } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class ClientService {
   client: Client[] = [];
+  private _behaviorSub = new BehaviorSubject<boolean>(false);
 
   constructor(private clientRepository: ClientRepository) {}
 
@@ -14,16 +15,8 @@ export class ClientService {
     return this.clientRepository.fetchClients();
   }
 
-  fetchClientByCPF(cpf: string): Client | undefined {
-    this.clientRepository.fetchClients().subscribe((listOfClients) => {
-      listOfClients.forEach((client: Client) => {
-        if (client.cpf === cpf) {
-          this.clientRepository.putClientInLocalStorage(client);
-        }
-        return undefined;
-      });
-    });
-    return undefined;
+  fetchClientByCPF(cpf: any): Observable<Client> {
+    return this.clientRepository.fetchClientByCPF(cpf);
   }
 
   addClient(client: Client): Observable<Client> {
@@ -39,7 +32,29 @@ export class ClientService {
     return this.clientRepository.removeClient(client.id);
   }
 
-  isLoggedin(): Observable<boolean> {
-    return this.clientRepository.isLoggedin();
+  isClientOpenTheOrder(statusClient? : boolean): Observable<boolean> {
+    this._behaviorSub.next(statusClient ?? false);
+
+    return this._behaviorSub.asObservable();
+  }
+
+  addClientInLocalStorage(client: Client) {
+    this.clientRepository.putClientInLocalStorage(client);
+  }
+
+  fetchIdClientInLocalStorage(): string {
+    return this.clientRepository.fetchIdClientInLocalStorage();
+  }
+
+  fetchNameClientInLocalStorage(): string {
+    return this.clientRepository.fetchClientName();
+  }
+
+  clearLocalStorage(): void {
+    this.clientRepository.clearLocalStorage();
+  }
+
+  isClientLogged(): Observable<boolean> {
+    return this.clientRepository.isClientLogged();
   }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Client } from '../../client/model/client';
 
 import { ClientService } from '../../client/service/client.service';
 import { OrderDialogComponent } from '../shared/order-dialog/order-dialog.component';
@@ -11,15 +12,21 @@ import { OrderDialogComponent } from '../shared/order-dialog/order-dialog.compon
   styleUrls: ['./add-order.component.css']
 })
 export class AddOrderComponent implements OnInit {
-  cpf: string = "";
   cpfExists = false;
-
+  cpf: string = "";
+  
   constructor(
     public dialog: MatDialog, 
     public clientService: ClientService,
     private _snackBar: MatSnackBar) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.clientService.isClientLogged().subscribe({
+      next: (newValue) => {
+        this.cpfExists = newValue;
+      }
+    });
+  }
 
   onClick(): void {
     this.openDialog();
@@ -32,17 +39,23 @@ export class AddOrderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // if (this.clientService.isCPFExists(result.cpf)) {
-      //   this.clientService.fetchClientByCPF(result.cpf);
-      //   this.showSucessSnackBar();
-      // } else {
-      //   this.showErrorSnackBar();
-      // }
+      this.clientService.fetchClientByCPF(result).subscribe({
+        next: (client) => {
+          if (client != null) {
+            this.showSucessSnackBar(client);
+          } else {
+            this.showErrorSnackBar();
+          }
+        },
+        error: () => this.showErrorSnackBar(),
+      });
     });
   }
 
-  showSucessSnackBar() {
-    this._snackBar.open('Cliente localizado com sucesso!', 'Fechar', {
+  showSucessSnackBar(client: Client) {
+    this.clientService.addClientInLocalStorage(client);
+
+    this._snackBar.open(`${client.name} encontrado com sucesso!`, 'Fechar', {
       duration: 3000
     });
   }

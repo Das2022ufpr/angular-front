@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { ProductService } from '../../product/service/product.service';
 import { Client } from '../model/client';
 import { ClientService } from '../service/client.service';
 
@@ -14,14 +15,17 @@ export class RemoveComponent implements OnInit {
   constructor(
     public clientService: ClientService,
     private _snackBar: MatSnackBar, 
-    ) { }
+    ) {}
 
   ngOnInit(): void {
   }
 
   onClick(): void {
     this.clientService.removerClient(this.client!).subscribe({
-      next: () => this.errorMessage('Cliente removido com sucesso!'),
+      next: () => {
+        this.clientService.clearLocalStorage();
+        this.errorMessage('Cliente removido com sucesso!')
+      },
       error: () => this.errorMessage('Erro ao remover conteúdo!'),
       complete: () => this.clientService.fetchaAllClients()
     });

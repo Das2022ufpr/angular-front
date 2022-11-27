@@ -1,35 +1,31 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, subscribeOn } from "rxjs";
+import { BehaviorSubject, Observable, subscribeOn } from "rxjs";
+import { StringsConstants } from "src/app/shared/strings";
+import { ItenOrder } from "../../item-order/model/item-order";
 import { Product } from "../model/product";
 
 @Injectable({ providedIn: 'root'})
 export class ProductRepository {
-    _mapOfProductsAndQuantity: Map<String, number> = new Map();
+    endpointUri = `${StringsConstants.baseUrl}/product`;
+    _mapOfProductsAndQuantity: BehaviorSubject<ItenOrder[]> = new BehaviorSubject<ItenOrder[]>([]);
+
+    constructor(private http: HttpClient) {}
 
     allProducts(): Observable<Product[]> {
-        return new Observable((subs) => {
-            subs.next(this.listOfProducts())
-        });
+        return this.http.get<Product[]>(this.endpointUri);
     }
 
-    allProductsAndQuantity(): Observable<Map<String, number>> {
-        return new Observable((subs) => {
-            subs.next(this._mapOfProductsAndQuantity);
-        });
+    allProductsAndQuantity(): Observable<ItenOrder[]> {
+        return this._mapOfProductsAndQuantity.asObservable();
     }
 
-    addProductsAndQuantity(product: Product, quantity: number) {
-        this._mapOfProductsAndQuantity.set('product', product.id);
-        this._mapOfProductsAndQuantity.set('quantity', quantity);
+    addProductsAndQuantity(item: ItenOrder) {
+        this._mapOfProductsAndQuantity.value.push(item);
+        this._mapOfProductsAndQuantity.next(this._mapOfProductsAndQuantity.value);
     }
 
-    private listOfProducts(): Product[] {
-        return [
-            new Product(0, "Salgadinho"),
-            new Product(1, "Bolacha"),
-            new Product(2, "Bola de Futebol"),
-            new Product(3, "Playstantion 5"),
-            new Product(4, "Xbox One"),
-        ];
+    clearShoppingCard() {
+        this._mapOfProductsAndQuantity.value.splice(0, this._mapOfProductsAndQuantity.value.length);
     }
 }

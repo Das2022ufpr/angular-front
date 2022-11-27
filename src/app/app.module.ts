@@ -65,6 +65,10 @@ import { OrderDialogComponent } from './components/order/shared/order-dialog/ord
 import { AddProductComponent } from './components/product/add-product/add-product.component';
 import { AddDialogComponent } from './components/product/shared/add-dialog/add-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderEmptyComponent } from './components/order/order-empty/order-empty.component';
+import { ShoppingCardComponent } from './components/product/shopping-card/shopping-card.component';
+import { LogoutComponent } from './components/client/logout/logout.component';
+import { EmptyClientComponent } from './components/shared/empty-client/empty-client.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +91,10 @@ import { HttpClientModule } from '@angular/common/http';
     OrderDialogComponent,
     AddProductComponent,
     AddDialogComponent,
+    OrderEmptyComponent,
+    ShoppingCardComponent,
+    LogoutComponent,
+    EmptyClientComponent,
   ],
   imports: [
     BrowserModule,

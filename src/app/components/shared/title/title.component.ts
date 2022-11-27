@@ -13,12 +13,9 @@ export class TitleComponent implements OnInit {
   constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
-    this.init();
-  }
-
-  init() {
-    this.clientService.isLoggedin().subscribe((isLog) => {
-      this.isLoogedin = isLog;
-    }); 
+    this
+      .clientService
+      .isClientLogged()
+      .subscribe((newValue) => this.isLoogedin = newValue);
   }
 }
